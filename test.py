@@ -14,14 +14,6 @@ def inventory_exists() :
         return False
     return True
 
-
-
-    # try:
-    #     driver.find_elements_by_xpath("section[@class= 'Inventory___b9C0J']")
-    # except :
-    #     return False
-    # return True
-
 driver = webdriver.Chrome()
 driver.get('https://autogravity.com')
 driver.maximize_window()
@@ -32,14 +24,11 @@ homepage.click_button()
 
 # Select Make Page
 makepage = SelectMakePage(driver)
-# makepage.select_random_make()
-driver.find_element_by_xpath("//h5[contains(text(),'Alfa Romeo')]").click()
-# driver.find_element_by_xpath("//h5[contains(text(),'Volkswagen')]").click()
+makepage.select_random_make()
 
 # Select Model Page
 modelpage = SelectModelsPage(driver)
-# modelpage.select_random_model() Stelvio Quadrifoglio
-driver.find_element_by_xpath("//h5[contains(text(),'Stelvio Quadrifoglio')]").click()
+modelpage.select_random_model() 
 modelpage.use_location()
 
 
