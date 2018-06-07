@@ -5,25 +5,25 @@ import time
 class HomePage():
     driver = None
     url = 'https://www.autogravity.com'
-    get_started_locator = 'homeButton___3IaYm'
+    get_started_locator = "//button[contains(@class,'homeButton___3IaYm')]"
     def __init__(self,driver) :
         self.driver = driver
 
     def click_button(self):
-        started = self.driver.find_element_by_class_name(self.get_started_locator)
+        started = self.driver.find_element_by_xpath(self.get_started_locator)
         started.click()
 
 class SelectMakePage():
     driver = None
     makes = None
-    makes_locator = "div[data-gtm='selectedMake']"
+    makes_locator = "//div[@data-gtm='selectedMake']"
 
     def __init__(self,driver) :
         time.sleep(2)
         self.driver = driver
 
     def get_makes(self):
-        self.makes = self.driver.find_elements_by_css_selector(self.makes_locator)
+        self.makes = self.driver.find_elements_by_xpath(self.makes_locator)
     
     def select_random_make(self):
         self.get_makes()
@@ -33,7 +33,7 @@ class SelectMakePage():
 class SelectModelsPage() :
     driver = None
     models = None
-    models_locator = "div[data-gtm='selectedModel']"
+    models_locator = "//div[@data-gtm='selectedModel']"
     location_text_locator = "//div[contains(text(), 'Tell us where you are so we can show you inventory nearby')]"
     my_location_locator = "//span[contains(text(),'USE MY LOCATION')]"
 
@@ -42,7 +42,7 @@ class SelectModelsPage() :
         self.driver = driver
     
     def get_models(self) :
-        self.models = self.driver.find_elements_by_css_selector(self.models_locator)
+        self.models = self.driver.find_elements_by_xpath(self.models_locator)
 
     def select_random_model(self):
         self.get_models()
@@ -59,14 +59,14 @@ class SelectModelsPage() :
 class SelectCarPage():
     driver = None
     cars = None
-    cars_locator = 'inventoryListCard___1My3t'
+    cars_locator = "//article[contains(@class,'inventoryListCard___1My3t')]"
 
     def __init__(self, driver) :
         time.sleep(2)
         self.driver = driver
 
     def get_cars(self) :
-        self.cars = self.driver.find_elements_by_class_name(self.cars_locator)
+        self.cars = self.driver.find_elements_by_xpath(self.cars_locator)
     
     def select_random_car(self):
         self.get_cars()
@@ -76,14 +76,14 @@ class SelectCarPage():
 class SelectTrim():
     driver = None
     trims = None
-    trims_locator = 'TrimListItem___2BANQ'
+    trims_locator = "//article[contains(@class,'TrimListItem___2BANQ')]"
 
     def __init__(self,driver):
         time.sleep(2)
         self.driver = driver
 
     def get_trims(self) :
-        self.trims = self.driver.find_elements_by_class_name(self.trims_locator)
+        self.trims = self.driver.find_elements_by_xpath(self.trims_locator)
     
     def select_random_trim(self):
         self.get_trims()
@@ -92,38 +92,50 @@ class SelectTrim():
 
 class SelectDealerPage():
     driver = None
-    select_dealer_locator = "button[data-gtm='confirmDealer']"
+    select_dealer_locator = "//button[@data-gtm='confirmDealer']"
 
     def __init__(self, driver):
         time.sleep(2)
         self.driver = driver
 
     def select_dealer(self):
-        select_button = self.driver.find_element_by_css_selector(self.select_dealer_locator)
-        select_button.click()
+        if(self.empty_dealer_list()) :
+            print("No dealers found nearby! Can not complete the application.")
+        else:
+            time.sleep(2)
+            select_button = self.driver.find_element_by_xpath(self.select_dealer_locator)
+            select_button.click()
+            
+
+    def empty_dealer_list(self):
+        try:
+            self.driver.find_element_by_xpath("//div[contains(@class,'emptyListLabel___qsYgw')]")
+        except:
+            return False
+        return True
     
 class ReviewVehiclePage() :
     driver = None
-    next_button_locator = 'Button___32Kv9'
+    next_button_locator = "//button[contains(@class,'Button___32Kv9')]"
 
     def __init__(self, driver) :
             time.sleep(2)
             self.driver = driver
 
     def click_next_button(self) :
-        next_button =  self.driver.find_element_by_class_name(self.next_button_locator)
+        next_button =  self.driver.find_element_by_xpath(self.next_button_locator)
         next_button.click()
 
 class ReviewDetailsPage() :
     driver = None
-    button_locator = "button[data-gtm='confirmDetails']"
+    button_locator = "//button[@data-gtm='confirmDetails']"
 
     def __init__(self, driver) :
             time.sleep(2)
             self.driver = driver
 
     def click_next_button(self) :
-        confirm_button =  self.driver.find_element_by_css_selector(self.button_locator)
+        confirm_button =  self.driver.find_element_by_xpath(self.button_locator)
         confirm_button.click()
 
 
